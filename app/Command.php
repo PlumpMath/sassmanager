@@ -2,31 +2,23 @@
 
 abstract class Command
 {
-	public $directives;
-
-	public $found = [];
+	public $directives = [];
 
 	static $keyword;
 
 	public function __construct($directives)
 	{
 		array_shift($directives);
-		$this->directives = $directives;
 		$expects = static::expect();
 
 		foreach ($directives as $i => $directive) {
 			foreach ($expects as $j => $expect) {
 				if ($expect::detect($directive)) {
-					$found[] = new $expect(array_slice($directives, $i));
+					$this->directives[$expect] = new $expect(array_slice($directives, $i));
 					unset($expects[$j]);
 				}
 			}
 		}
-
-		print_r([
-			get_called_class(),
-			$found
-		]);
 	}
 
 	public static function pattern()
@@ -42,5 +34,20 @@ abstract class Command
 	public static function expect()
 	{
 		return [];
+	}
+
+	public function execute()
+	{
+
+	}
+
+	public function getDirective($type)
+	{
+		return $this->directives[$type];
+	}
+
+	public function directiveExists($type)
+	{
+		return (isset($this->directives[$type]));
 	}
 }

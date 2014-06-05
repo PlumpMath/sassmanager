@@ -1,6 +1,9 @@
 <?php
 
+require 'app/Reporter.php';
+
 require 'app/Process.php';
+
 require 'app/InstanceManager.php';
 
 require 'app/Command.php';
