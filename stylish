@@ -3,15 +3,21 @@
 
 require 'require.php';
 
+// first argument is the script's name: "stylish", remove this
 array_shift($argv);
 
+// the command to execute should be the first thing
 $command = $argv[0];
+
+// and we feed each command its own name, so directives are = argument string
 $directives = $argv;
 
+// each command should detect if its been called...
 $watch = WatchCommand::detect($command);
 $list = ListCommand::detect($command);
 $stop = StopCommand::detect($command);
 
+// and then go through and perform approriate operations
 if ($watch) {
 	$watch = new WatchCommand($directives);
 } else if ($list || $stop) {
