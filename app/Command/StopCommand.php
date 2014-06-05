@@ -19,9 +19,12 @@ class StopCommand extends Command
 			Reporter::shout("Missing arguments...");
 			$successful = false;
 		} else {
-			$command = "kill -KILL ".$this->directives['Parameter']->value;
+			$id = $this->directives['Parameter']->value;
+
+			$command = "kill -KILL ".$id;
 
 			Process::run($command);
+			FileInstanceManager::remove($id);
 		}
 
 		return $successful;

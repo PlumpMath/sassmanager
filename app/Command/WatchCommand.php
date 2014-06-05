@@ -27,7 +27,9 @@ class WatchCommand extends Command
 			if ($this->directiveExists('CompressDirective'))
 				$command .= " --style compressed";
 
-			InstanceManager::add(Process::run($command), $name);
+			$name = $this->directives['NameDirective']->directives['Parameter']->value;
+
+			FileInstanceManager::add(Process::run($command), $name);
 		}
 
 		return $successful;

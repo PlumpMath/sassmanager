@@ -1,9 +1,19 @@
 <?php
 
-class InstanceManager
+abstract class InstanceManager
 {
-	public static function add($pid, $name)
+	private function __construct() {}
+
+	abstract static function add($id, $name);
+
+	public static function remove($id)
 	{
-		Reporter::shout("SASS Process started with id: ".$pid);
+		return (is_int($id)) ? static::removeById($id) : static::removeByName($id);
 	}
+
+	abstract static function removeById($id);
+	abstract static function removeByName($name);
+
+	abstract static function findByName($name);
+	abstract static function findAll();
 }

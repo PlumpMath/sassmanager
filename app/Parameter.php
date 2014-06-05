@@ -5,7 +5,7 @@ class Parameter extends Command {
 
 	public function __construct($directives)
 	{
-		$this->value = $directives[0];
+		$this->value = trim($directives[0]);
 		parent::__construct($directives);
 	}
 
