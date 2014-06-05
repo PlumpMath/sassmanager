@@ -30,28 +30,57 @@ class Process
 ********************************/
 abstract class Command
 {
-	public static function pattern()
+	public $directives;
+
+	static $keyword;
+
+	public function __construct($directives)
 	{
-		return '/help/';
+		$this->directives = $directives;
+	}
+
+	private static function pattern()
+	{
+		return '/'.static::$keyword.'/';
 	}
 	
 	public static function detect($arg)
 	{
-		return (preg_match(self::pattern(), $arg)) ? new self : false;
+		return (preg_match(static::pattern(), $arg));
 	}
 }
 
 class WatchCommand extends Command
 {
-	public static function pattern() {
-		return '/watch/';
-	}
+	static $keyword = 'watch';
+}
+
+class ListCommand extends Command
+{
+	static $keyword = 'list';
+}
+
+class StopCommand extends Command
+{
+	static $keyword = 'stop';
 }
 
 array_shift($argv);
 
-$watch = WatchCommand::detect($argv[0]);
+$command = $argv[0];
 
-if ($watch === false) echo "\nNothing to watch...\n";
+array_shift($argv);
+
+$directives = $argv;
+
+$watch = WatchCommand::detect($command);
+$list = ListCommand::detect($command);
+$stop = StopCommand::detect($command);
+
+if ($watch) {
+	$watch = new WatchCommand($directives);
+} else if ($list || $stop) {
+
+}
 
 ?>
