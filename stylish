@@ -1,0 +1,98 @@
+#!/usr/bin/env php
+<?php
+
+require 'SASS.php';
+require 'CommandLineArguments.php';
+
+$file = 'sass.instances';
+$sasslings = [];
+
+if (file_exists($file)) {
+	$pointer = fopen($file, 'r');
+
+	while (($buffer = fgets($pointer, 1024)) !== false) {
+		$sass = new SASS(trim($buffer)); 
+	}
+
+	fclose($file);
+}
+
+/******************************************
+		Possible Classes
+*******************************************
+
+	-> Application
+
+	-> Process
+
+	-> InstanceManager
+		-> FileInstanceManager
+		-> DBInstanceManager
+
+	-> Command
+		-> ListCommand
+		-> StopCommand
+		-> WatchCommand
+
+
+*/
+
+/********************************
+		InstanceManager
+********************************/
+class InstanceManager
+{
+
+}
+
+/********************************
+		Process
+********************************/
+class Process
+{
+	public function run()
+	{
+
+	}
+
+	public function kill()
+	{
+		
+	}
+}
+
+/********************************
+		Command
+********************************/
+class Command
+{
+	public function pattern()
+	{
+
+	}
+}
+
+// read arguments passed to script
+$proc = $argv[0];
+
+// list, stop
+if ($proc === "list" || $proc === "stop") {
+
+// read all pid and name values from file
+
+	// check if pid is running
+	// add pid to array
+
+// list all running SASS
+
+// stop pid
+
+} else if ($proc === "watch") {
+
+// watch
+
+// instantiate SASS, append pid and name to file
+
+}
+
+?>
