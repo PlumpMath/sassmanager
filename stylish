@@ -32,11 +32,22 @@ abstract class Command
 {
 	public $directives;
 
+	public $found;
+
 	static $keyword;
 
 	public function __construct($directives)
 	{
 		$this->directives = $directives;
+		$expects = static::expect();
+
+		foreach ($directives as $directive) {
+			foreach ($expects as $expect) {
+				if ($expect::detect($directive)) {
+					$found[] = new $expect;
+				}
+			}
+		}
 	}
 
 	private static function pattern()
@@ -48,11 +59,25 @@ abstract class Command
 	{
 		return (preg_match(static::pattern(), $arg));
 	}
+
+	public static function expect()
+	{
+		return [];
+	}
 }
 
 class WatchCommand extends Command
 {
 	static $keyword = 'watch';
+
+	public static function expect()
+	{
+		return [
+			'NameDirective',
+			'CompressDirective',
+			'InputOutputParameter'
+		];
+	}
 }
 
 class ListCommand extends Command
@@ -63,6 +88,46 @@ class ListCommand extends Command
 class StopCommand extends Command
 {
 	static $keyword = 'stop';
+}
+
+class Directive extends Command
+{
+	private static function pattern()
+	{
+		return '/(-'.substr(static::$keyword, 0).'|--'.static::$keyword.')/';
+	}
+}
+
+class NameDirective extends Directive
+{
+	static $keyword = 'name';
+
+	public static function expect()
+	{
+		return [
+			'Parameter'
+		];
+	}
+}
+
+class CompressDirective extends Directive
+{
+	static $keyword = 'compressed';
+}
+
+class Parameter extends Command {
+	private static function pattern()
+	{
+		return '/^[^-]+/';
+	}
+}
+
+class InputOutputParameter extends Parameter
+{
+	private static function pattern()
+	{
+		return '/(.*):(.*)/';
+	}
 }
 
 array_shift($argv);
