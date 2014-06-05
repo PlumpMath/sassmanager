@@ -30,7 +30,7 @@ class FileInstanceManager extends InstanceManager
 		$lines = [];
 
 		foreach($processes as $process) {
-			$lines = implode(' ', $process);
+			$lines[] = implode(' ', $process);
 		}
 
 		if (is_array($lines)) $lines = implode("\n", $lines);
