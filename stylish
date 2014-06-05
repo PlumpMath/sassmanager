@@ -1,149 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-/********************************
-		InstanceManager
-********************************/
-class InstanceManager
-{
-
-}
-
-/********************************
-		Process
-********************************/
-class Process
-{
-	public function run()
-	{
-
-	}
-
-	public function kill()
-	{
-		
-	}
-}
-
-/********************************
-		Command
-********************************/
-abstract class Command
-{
-	public $directives;
-
-	public $found = [];
-
-	static $keyword;
-
-	public function __construct($directives)
-	{
-		array_shift($directives);
-		$this->directives = $directives;
-		$expects = static::expect();
-
-		foreach ($directives as $i => $directive) {
-			foreach ($expects as $j => $expect) {
-				if ($expect::detect($directive)) {
-					$found[] = new $expect(array_slice($directives, $i));
-					unset($expects[$j]);
-				}
-			}
-		}
-
-		print_r([
-			get_called_class(),
-			$found
-		]);
-	}
-
-	public static function pattern()
-	{
-		return '/'.static::$keyword.'/';
-	}
-	
-	public static function detect($arg)
-	{
-		return (preg_match(static::pattern(), $arg));
-	}
-
-	public static function expect()
-	{
-		return [];
-	}
-}
-
-class WatchCommand extends Command
-{
-	static $keyword = 'watch';
-
-	public static function expect()
-	{
-		return [
-			'NameDirective',
-			'CompressDirective',
-			'InputOutputParameter'
-		];
-	}
-}
-
-class ListCommand extends Command
-{
-	static $keyword = 'list';
-}
-
-class StopCommand extends Command
-{
-	static $keyword = 'stop';
-}
-
-class Directive extends Command
-{
-	public static function pattern()
-	{
-		return '/(\-'.substr(static::$keyword, 0, 1).'|\-\-'.static::$keyword.')/';
-	}
-}
-
-class NameDirective extends Directive
-{
-	static $keyword = 'name';
-
-	public static function expect()
-	{
-		return [
-			'Parameter'
-		];
-	}
-}
-
-class CompressDirective extends Directive
-{
-	static $keyword = 'compressed';
-}
-
-class Parameter extends Command {
-	public $value;
-
-	public function __construct($directives)
-	{
-		$this->value = $directives[0];
-		parent::__construct($directives);
-	}
-
-	public static function pattern()
-	{
-		return '/^[^-]/';
-	}
-}
-
-class InputOutputParameter extends Parameter
-{
-	public static function pattern()
-	{
-		return '/(.*):(.*)/';
-	}
-}
+require 'require.php';
 
 array_shift($argv);
 
@@ -157,7 +15,9 @@ $stop = StopCommand::detect($command);
 if ($watch) {
 	$watch = new WatchCommand($directives);
 } else if ($list || $stop) {
-
+	if ($list) {
+		$list = new ListCommand($directives);
+	} else if ($stop) {
+		$stop = new StopCommand($directives);
+	}
 }
-
-?>
