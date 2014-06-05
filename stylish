@@ -32,25 +32,32 @@ abstract class Command
 {
 	public $directives;
 
-	public $found;
+	public $found = [];
 
 	static $keyword;
 
 	public function __construct($directives)
 	{
+		array_shift($directives);
 		$this->directives = $directives;
 		$expects = static::expect();
 
-		foreach ($directives as $directive) {
-			foreach ($expects as $expect) {
+		foreach ($directives as $i => $directive) {
+			foreach ($expects as $j => $expect) {
 				if ($expect::detect($directive)) {
-					$found[] = new $expect;
+					$found[] = new $expect(array_slice($directives, $i));
+					unset($expects[$j]);
 				}
 			}
 		}
+
+		print_r([
+			get_called_class(),
+			$found
+		]);
 	}
 
-	private static function pattern()
+	public static function pattern()
 	{
 		return '/'.static::$keyword.'/';
 	}
@@ -92,9 +99,9 @@ class StopCommand extends Command
 
 class Directive extends Command
 {
-	private static function pattern()
+	public static function pattern()
 	{
-		return '/(-'.substr(static::$keyword, 0).'|--'.static::$keyword.')/';
+		return '/(\-'.substr(static::$keyword, 0, 1).'|\-\-'.static::$keyword.')/';
 	}
 }
 
@@ -116,15 +123,23 @@ class CompressDirective extends Directive
 }
 
 class Parameter extends Command {
-	private static function pattern()
+	public $value;
+
+	public function __construct($directives)
 	{
-		return '/^[^-]+/';
+		$this->value = $directives[0];
+		parent::__construct($directives);
+	}
+
+	public static function pattern()
+	{
+		return '/^[^-]/';
 	}
 }
 
 class InputOutputParameter extends Parameter
 {
-	private static function pattern()
+	public static function pattern()
 	{
 		return '/(.*):(.*)/';
 	}
@@ -133,9 +148,6 @@ class InputOutputParameter extends Parameter
 array_shift($argv);
 
 $command = $argv[0];
-
-array_shift($argv);
-
 $directives = $argv;
 
 $watch = WatchCommand::detect($command);
