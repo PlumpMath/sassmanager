@@ -9,11 +9,13 @@ class ListCommand extends Command
 		$successful = true;
 
 		$processes = FileInstanceManager::findAll();
-		$lines = [];
 
 		Reporter::shout(Reporter::MSG_LIST_HEAD);
 
 		foreach ($processes as $process) {
+			$process["cpu"] = Process::getCPUUsage($process["id"]);
+			$process["mem"] = Process::getMemUsage($process["id"]);
+
 			Reporter::shout(Reporter::MSG_LIST_ITEM, $process);
 		}
 

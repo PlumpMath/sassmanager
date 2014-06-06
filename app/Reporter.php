@@ -19,11 +19,11 @@ EOD;
 	const MSG_LIST_HEAD = <<<EOD
 ..	PROCESSES   ..
 
-PID             | NAME            | TIME
-===========================================================
+PID             | NAME            | TIME            | CPU             | MEM               
+==========================================================================================
 EOD;
 	const MSG_LIST_ITEM = <<<EOD
-%-15s | %-15s | %-15s
+%-15s | %-15s | %-15s | %-15s | %s
 EOD;
 	const MSG_HELP = <<<EOD
 EOD;

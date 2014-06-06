@@ -7,6 +7,16 @@ class Process
 		return +shell_exec("nohup $command > /dev/null & echo $!");
 	}
 
+	public static function getCPUUsage($id)
+	{
+		return trim(exec("ps -o %cpu= $id")).'%';
+	}
+
+	public static function getMemUsage($id)
+	{
+		return trim(exec("ps -o rss= $id")).' bytes';
+	}
+
 	public static function isAlive($id)
 	{
 		exec("ps $id", $_out);
