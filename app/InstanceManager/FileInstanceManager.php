@@ -2,11 +2,13 @@
 
 class FileInstanceManager extends InstanceManager
 {
-	public static $uri = ".sassinstances";
+	public static function URI() {
+		return WORKING_DIR.'/.sassinstances';
+	}
 
 	public static function load()
 	{
-		$instances = file_get_contents(static::$uri);
+		$instances = file_get_contents(static::URI());
 		$processes = explode("\n", $instances);
 		$_out = [];
 
@@ -39,13 +41,13 @@ class FileInstanceManager extends InstanceManager
 			$lines = "";
 		}
 
-		file_put_contents(static::$uri, $lines);
+		file_put_contents(static::URI(), $lines);
 	}
 
 	static function add($id, $name)
 	{
 		$now = time();
-		file_put_contents(static::$uri, "\n$id $name $now", FILE_APPEND);
+		file_put_contents(static::URI(), "\n$id $name $now", FILE_APPEND);
 	}
 
 	static function removeById($id)

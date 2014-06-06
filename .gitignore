@@ -1,2 +1,4 @@
 .sassinstances
 .sasslog
+*.css
+*.sass

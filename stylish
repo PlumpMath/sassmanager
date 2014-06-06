@@ -3,6 +3,8 @@
 
 require 'require.php';
 
+define('WORKING_DIR', __DIR__);
+
 Reporter::shout(Reporter::MSG_START);
 
 // first argument is the script's name: "stylish", remove this

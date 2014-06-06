@@ -2,9 +2,14 @@
 
 class Process
 {
+	public static function logURI()
+	{
+		return WORKING_DIR.'/.sasslog';
+	}
+
 	public static function run($command)
 	{
-		return +shell_exec("nohup $command >> .sasslog & echo $!");
+		return +shell_exec("nohup $command >> ".static::logURI()." & echo $!");
 	}
 
 	public static function getCPUUsage($id)
@@ -28,6 +33,14 @@ class Process
 		exec("ps $id", $_out);
 
 		return (count($_out) >= 2);
+	}
+
+	public static function isType($id, $type)
+	{
+		exec ("ps $id", $_out);
+
+		if (count($_out) > 1 && preg_match($type, $_out[2])) return true;
+		return false;
 	}
 
 	public static function kill($id)
