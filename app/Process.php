@@ -4,7 +4,7 @@ class Process
 {
 	public static function run($command)
 	{
-		return +shell_exec("nohup $command > /dev/null & echo $!");
+		return +shell_exec("nohup $command >> sass.log & echo $!");
 	}
 
 	public static function getCPUUsage($id)
@@ -14,7 +14,13 @@ class Process
 
 	public static function getMemUsage($id)
 	{
-		return trim(exec("ps -o rss= $id")).' bytes';
+		$info = +trim(exec("ps -o rss= $id"));
+
+		if ($info > 1024) {
+			return (round($info/1024, 3))." MB";
+		} else {
+			return $info." KB";
+		}
 	}
 
 	public static function isAlive($id)
