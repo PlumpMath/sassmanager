@@ -6,9 +6,9 @@ A PHP wrapper that manages SASS processes.
 Synopsis
 --------
 
-	stylish watch \[-n | --name\] ProcessName \[-c | --compressed\] \[-h | --help\] \[InputFile:OutputFile ...\]
+	stylish watch [-n | --name] ProcessName [-c | --compressed] [-h | --help] [InputFile:OutputFile ...]
 
-	stylish stop \[ProcessID | ProcessName\]
+	stylish stop [ProcessID | ProcessName]
 
 	stylish list
 
@@ -17,9 +17,9 @@ Synopsis
 Description
 -----------
 
-`watch`	--	create a SASS process
+`watch`	--	Create a SASS process
 
-The following options are available for watch:
+The following options are available for `watch`:
 
 `-n --name` 					Name the created SASS process
 
@@ -29,16 +29,19 @@ The following options are available for watch:
 
 `InputFile:OutputFile`	 		Specify SASS's Inputs and Outputs
 
+--------------------------------------------------------------------------------
 
 `stop`	--	Stop a SASS process
 
-The following options are available for stop:
+The following options are available for `stop`:
 
 `ProcessID ProcessName`			The name or pid of the process to stop
 
+--------------------------------------------------------------------------------
 
 `list`	--	List all managed SASS processes
 
+--------------------------------------------------------------------------------
 
 `shutdown`	--	Stop all managed SASS processes
 
