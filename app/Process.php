@@ -16,7 +16,6 @@ class Process
 
 	public static function kill($id)
 	{
-		print_r($id);
 		return shell_exec("kill -KILL $id");
 	}
 }

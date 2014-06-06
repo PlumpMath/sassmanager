@@ -51,9 +51,11 @@ class FileInstanceManager extends InstanceManager
 		$removed = false;
 
 		foreach ($loaded as $process) {
-			if ( ! $process["id"] === $id) $processes[] = $process;
+			if ( $process["id"] != $id) $processes[] = $process;
 			else $removed = true;
 		}
+
+		print_r($processes);
 
 		if ($removed) static::save($processes);
 	}
@@ -65,7 +67,7 @@ class FileInstanceManager extends InstanceManager
 		$removed = false;
 
 		foreach ($loaded as $process) {
-			if ($process["name"] !== $name) {
+			if ($process["name"] != $name) {
 				$processes[] = $process;
 			} else {
 				$removed = true;
