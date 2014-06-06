@@ -17,7 +17,10 @@ class ShutdownCommand extends Command
 
 		FileInstanceManager::removeAll();
 
-		Reporter::shout(Reporter::MSG_SHUTDOWN, $n);
+		if ($n > 0)
+			Reporter::shout(Reporter::MSG_SHUTDOWN, $n);
+		else
+			Reporter::shout(Reporter::MSG_NOTHING_TO_CLOSE);
 
 		return $successful;
 	}

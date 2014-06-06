@@ -27,13 +27,17 @@ class FileInstanceManager extends InstanceManager
 
 	public static function save($processes=null)
 	{
-		$lines = [];
+		if ( ! is_null($processes)) {
+			$lines = [];
 
-		foreach($processes as $process) {
-			$lines[] = implode(' ', $process);
+			foreach($processes as $process) {
+				$lines[] = implode(' ', $process);
+			}
+
+			if (is_array($lines)) $lines = implode("\n", $lines);
+		} else {
+			$lines = "";
 		}
-
-		if (is_array($lines)) $lines = implode("\n", $lines);
 
 		file_put_contents(static::$uri, $lines);
 	}

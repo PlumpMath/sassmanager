@@ -12,8 +12,9 @@ EOD;
 ... Shutting down Stylish SASS ...
 
 	==> Closed [ %d ] processes
-
-	Goodbye!
+EOD;
+	const MSG_NOTHING_TO_CLOSE = <<<EOD
+.: No SASS processes running :.
 EOD;
 	const MSG_LIST_HEAD = <<<EOD
 ..	PROCESSES   ..
