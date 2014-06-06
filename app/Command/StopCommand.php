@@ -16,15 +16,18 @@ class StopCommand extends Command
 		$successful = true;
 
 		if ( ! $this->directiveExists('Parameter')) {
-			Reporter::shout("Missing arguments...");
+			Reporter::shout(Reporter::MSG_MISSING_ARGUMENTS);
+			Reporter::shout(Reporter::EXPECTED, "process name");
 			$successful = false;
 		} else {
 			$id = $this->getDirective('Parameter')->value;
 
-			$command = "kill -KILL ".$id;
+			if ( ! is_int($id)) {
+				$id = FileInstanceManager::find($id);
+			}
 
-			Process::run($command);
 			FileInstanceManager::remove($id);
+			Process::kill($id);
 		}
 
 		return $successful;

@@ -8,16 +8,14 @@ class ListCommand extends Command
 	{
 		$successful = true;
 
-		$id = $this->getFirstDirective('Parameter')->value;
-
 		$processes = FileInstanceManager::findAll();
 		$lines = [];
 
-		foreach ($processes as $process) {
-			$lines[] = implode(" ", $process);
-		}
+		Reporter::shout(Reporter::MSG_LIST_HEAD);
 
-		Reporter::shout("The following are alive:\n".implode("\n", $lines));
+		foreach ($processes as $process) {
+			Reporter::shout(Reporter::MSG_LIST_ITEM, $process);
+		}
 
 		return $successful;
 	}

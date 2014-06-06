@@ -32,7 +32,7 @@ abstract class Command
 	public function getDirective($type)
 	{
 		if (count($this->directives) === 1) {
-			$this->getFirstDirective($type);
+			return $this->getFirstDirective($type);
 		} else {
 			return $this->directives[$type];
 		}

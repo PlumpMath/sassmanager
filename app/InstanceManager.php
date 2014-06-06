@@ -14,6 +14,6 @@ abstract class InstanceManager
 	abstract static function removeById($id);
 	abstract static function removeByName($name);
 
-	abstract static function findByName($name);
+	abstract static function find($name);
 	abstract static function findAll();
 }

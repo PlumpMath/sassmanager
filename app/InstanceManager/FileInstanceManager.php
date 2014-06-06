@@ -25,7 +25,7 @@ class FileInstanceManager extends InstanceManager
 		return $_out;
 	}
 
-	public static function save($processes)
+	public static function save($processes=null)
 	{
 		$lines = [];
 
@@ -75,7 +75,12 @@ class FileInstanceManager extends InstanceManager
 		if ($removed) static::save($processes);
 	}
 
-	static function findByName($name)
+	static function removeAll()
+	{
+		static::save();
+	}
+
+	static function find($name)
 	{
 		$loaded = static::load();
 		$processes = [];

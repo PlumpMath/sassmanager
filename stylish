@@ -3,6 +3,8 @@
 
 require 'require.php';
 
+Reporter::shout(Reporter::MSG_START);
+
 // first argument is the script's name: "stylish", remove this
 array_shift($argv);
 
@@ -16,6 +18,7 @@ $directives = $argv;
 $watch = WatchCommand::detect($command);
 $list = ListCommand::detect($command);
 $stop = StopCommand::detect($command);
+$shutdown = ShutdownCommand::detect($command);
 
 $help = HelpDirective::detect($command);
 
@@ -29,8 +32,11 @@ if ($watch) {
 } else if ($stop) {
 	$stop = new StopCommand($directives);
 	$stop->execute();
+} else if ($shutdown) {
+	$shutdown = new ShutdownCommand($shutdown);
+	$shutdown->execute();
 } else if ($help) {
 	Reporter::shout("Stylish SASS v0.0.1\nCreates, kills, tracks and otherwise manages SASS processes.\n\n\tCommands:\n\n\twatch\t\t\t\tStart a SASS process\n\t\tArguments:\n\t\t-n --name\t\tName the process\n\t\t{input}:{output}\t{input} is the input SASS file\n\t\t\t\t\t{output} is the compiled CSS\n\t\t-c --compressed\t\tOutput minified CSS (Optional)\n\n\tlist\t\t\t\tList all SASS processes\n\tstop\t\t\t\tstop a SASS process\n\t\tArguments:\n\t\t{pid}\t\t\tProcess ID to kill\n\n\t-h --help\t\t\t\tDisplay this help dialogue");
 } else {
-	Reporter::shout("Unrecognized Command: <$command>\nTry --help");
+	Reporter::shout(Reporter::MSG_UNRECOGNIZED_COMMAND);
 }
