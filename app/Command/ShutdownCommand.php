@@ -12,7 +12,11 @@ class ShutdownCommand extends Command
 		$n = count($processes);
 
 		foreach ($processes as $process) {
-			Process::kill(+$process["id"]);
+			if (Process::isType($process["id"], '(ruby)(.*)+(sass)')) {
+				Process::kill(+$process["id"]);
+			} else {
+				Reporter::shout(Reporter::MSG_IS_NOT_SASS, $process["id"]);
+			}
 		}
 
 		FileInstanceManager::removeAll();

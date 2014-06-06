@@ -39,7 +39,8 @@ class Process
 	{
 		exec ("ps $id", $_out);
 
-		if (count($_out) > 1 && preg_match($type, $_out[2])) return true;
+		if (count($_out) > 1 && preg_match('/'.$type.'/', $_out[1])) return true;
+
 		return false;
 	}
 

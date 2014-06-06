@@ -4,8 +4,7 @@ class Reporter
 {
 
 	const MSG_START = <<<EOD
-... Welcome to Stylish SASS ...
-	v0.0.0
+Welcome to Stylish SASS
 
 EOD;
 	const MSG_HELP = <<<EOD
@@ -62,7 +61,7 @@ EOD;
 %-15s
 EOD;
 	const MSG_SHUTDOWN = <<<EOD
-... Shutting down Stylish SASS ...
+Shutting down Stylish SASS ...
 
 	==> Closed [ %d ] processes
 EOD;
@@ -70,7 +69,7 @@ EOD;
 .: No SASS processes running :.
 EOD;
 	const MSG_LIST_HEAD = <<<EOD
-..	PROCESSES   ..
+PROCESSES
 
 PID             | NAME            | TIME            | CPU             | MEM               
 ==========================================================================================
@@ -88,18 +87,19 @@ EOD;
 .: Unrecognized Command :.
 EOD;
 	const MSG_WATCH = <<<EOD
-... Initializing SASS Instances ...
+Initializing SASS Instances ...
 
 	==> Watching %s: [ %s ]
 EOD;
-
 	const MSG_STOP = <<<EOD
-... Killing SASS Instances ...
+Killing SASS Instances ...
 
 	==> Killed SASS [ %s, %s ]
 EOD;
-
-	const MSG_NOT_ALIVE = <<< EOD
+	const MSG_IS_NOT_SASS = <<<EOD
+.: Process is not SASS :.
+EOD;
+	const MSG_NOT_ALIVE = <<<EOD
 .: SASS Instance [ %s ] cannot be found :.
 EOD;
 
