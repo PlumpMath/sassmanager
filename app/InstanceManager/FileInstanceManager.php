@@ -41,7 +41,7 @@ class FileInstanceManager extends InstanceManager
 	static function add($id, $name)
 	{
 		$now = time();
-		file_put_contents(static::$uri, "$id $name $now\n", FILE_APPEND);
+		file_put_contents(static::$uri, "\n$id $name $now", FILE_APPEND);
 	}
 
 	static function removeById($id)

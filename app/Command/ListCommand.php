@@ -8,7 +8,7 @@ class ListCommand extends Command
 	{
 		$successful = true;
 
-		$id = $this->directives['Parameter']->value;
+		$id = $this->getFirstDirective('Parameter')->value;
 
 		$processes = FileInstanceManager::findAll();
 		$lines = [];

@@ -14,11 +14,33 @@ abstract class Command
 		foreach ($directives as $i => $directive) {
 			foreach ($expects as $j => $expect) {
 				if ($expect::detect($directive)) {
-					$this->directives[$expect] = new $expect(array_slice($directives, $i));
-					unset($expects[$j]);
+					$this->addDirective($expect, new $expect(array_slice($directives, $i)));
 				}
 			}
 		}
+	}
+
+	public function addDirective($name, $directive)
+	{
+		if ( ! isset($this->directives[$name])) {
+			$this->directives[$name] = [$directive];
+		} else {
+			$this->directives[$name][] = $directive;
+		}
+	}
+
+	public function getDirective($type)
+	{
+		if (count($this->directives) === 1) {
+			$this->getFirstDirective($type);
+		} else {
+			return $this->directives[$type];
+		}
+	}
+
+	public function getFirstDirective($type)
+	{
+		return $this->directives[$type][0];
 	}
 
 	public static function pattern()
@@ -39,11 +61,6 @@ abstract class Command
 	public function execute()
 	{
 
-	}
-
-	public function getDirective($type)
-	{
-		return $this->directives[$type];
 	}
 
 	public function directiveExists($type)

@@ -19,7 +19,7 @@ class StopCommand extends Command
 			Reporter::shout("Missing arguments...");
 			$successful = false;
 		} else {
-			$id = $this->directives['Parameter']->value;
+			$id = $this->getDirective('Parameter')->value;
 
 			$command = "kill -KILL ".$id;
 

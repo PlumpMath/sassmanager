@@ -22,12 +22,20 @@ class WatchCommand extends Command
 			Reporter::shout("Missing arguments...");
 			$successful = false;
 		} else {
-			$command = "sass --watch ".$this->directives['InputOutputParameter']->value;
+			$iops = $this->getDirective('InputOutputParameter');
+
+			$io_str = '';
+
+			foreach ($iops as $iop) {
+				$io_str .= ' '.$iop->value;
+			}
+
+			$command = "sass --watch".$io_str;
 
 			if ($this->directiveExists('CompressDirective'))
 				$command .= " --style compressed";
 
-			$name = $this->directives['NameDirective']->directives['Parameter']->value;
+			$name = $this->getFirstDirective('NameDirective')->getFirstDirective('Parameter')->value;
 
 			FileInstanceManager::add(Process::run($command), $name);
 		}
