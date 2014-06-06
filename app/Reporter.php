@@ -30,10 +30,25 @@ EOD;
 .: Some necessary arguments are missing :.
 EOD;
 	const MSG_EXPECTED = <<<EOD
-	==> Needed %s [%s]
+	==> Needed %s: [%s]
 EOD;
 	const MSG_UNRECOGNIZED_COMMAND = <<<EOD
 .: Unrecognized Command :.
+EOD;
+	const MSG_WATCH = <<<EOD
+... Initializing SASS Instances ...
+
+	==> Watching %s: [ %s ]
+EOD;
+
+	const MSG_STOP = <<<EOD
+... Killing SASS Instances ...
+
+	==> Killed SASS [ %s, %s ]
+EOD;
+
+	const MSG_NOT_ALIVE = <<< EOD
+.: SASS Instance [ %s ] cannot be found :.
 EOD;
 
 	public static function shout($msg, $parameters=null)

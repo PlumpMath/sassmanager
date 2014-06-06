@@ -48,6 +48,8 @@ class WatchCommand extends Command
 
 			$name = $this->getFirstDirective('NameDirective')->getFirstDirective('Parameter')->value;
 
+			Reporter::shout(Reporter::MSG_WATCH, [$name, $io_str]);
+
 			FileInstanceManager::add(Process::run($command), $name);
 		}
 

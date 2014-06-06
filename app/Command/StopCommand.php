@@ -23,11 +23,20 @@ class StopCommand extends Command
 			$id = $this->getDirective('Parameter')->value;
 
 			if ( ! is_int($id)) {
+				$name = $id;
 				$id = FileInstanceManager::find($id);
+			} else {
+				$name = FileInstanceManager::findName($id);
 			}
 
-			FileInstanceManager::remove($id);
-			Process::kill($id);
+			if (is_null($id)) {
+				Reporter::shout(Reporter::MSG_NOT_ALIVE, $name);
+			} else {
+				Reporter::shout(Reporter::MSG_STOP, [$name, $id]);
+
+				FileInstanceManager::remove($id);
+				Process::kill($id);
+			}
 		}
 
 		return $successful;

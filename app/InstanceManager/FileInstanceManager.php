@@ -55,8 +55,6 @@ class FileInstanceManager extends InstanceManager
 			else $removed = true;
 		}
 
-		print_r($processes);
-
 		if ($removed) static::save($processes);
 	}
 
@@ -95,6 +93,17 @@ class FileInstanceManager extends InstanceManager
 		return $instance;
 	}
 
+	static function findName($id)
+	{
+		$loaded = static::load();
+
+		foreach ($loaded as $process) {
+			if ($process["id"] == $id) return $process["name"];
+		}
+
+		return "Not Found";
+	}
+
 	static function findAll()
 	{
 		$loaded = static::load();
@@ -114,5 +123,10 @@ class FileInstanceManager extends InstanceManager
 		}
 
 		return $processes;
+	}
+
+	static function exists($id)
+	{
+		return ( ! is_null(static::find($id)));
 	}
 }
