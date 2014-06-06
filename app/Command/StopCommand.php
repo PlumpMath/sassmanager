@@ -16,8 +16,8 @@ class StopCommand extends Command
 		$successful = true;
 
 		if ( ! $this->directiveExists('Parameter')) {
-			Reporter::shout(Reporter::MSG_MISSING_ARGUMENTS);
-			Reporter::shout(Reporter::EXPECTED, "process name");
+			Reporter::shout(Reporter::MSG_ARGUMENT_MISSING);
+			Reporter::shout(Reporter::MSG_EXPECTED, ["Parameter", "--name"]);
 			$successful = false;
 		} else {
 			$id = $this->getDirective('Parameter')->value;
