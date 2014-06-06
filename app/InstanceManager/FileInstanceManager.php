@@ -2,7 +2,7 @@
 
 class FileInstanceManager extends InstanceManager
 {
-	public static $uri = "sass.instances";
+	public static $uri = ".sassinstances";
 
 	public static function load()
 	{

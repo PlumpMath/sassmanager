@@ -4,7 +4,7 @@ class Process
 {
 	public static function run($command)
 	{
-		return +shell_exec("nohup $command >> sass.log & echo $!");
+		return +shell_exec("nohup $command >> .sasslog & echo $!");
 	}
 
 	public static function getCPUUsage($id)
