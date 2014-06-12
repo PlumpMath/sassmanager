@@ -1,10 +1,20 @@
 #!/usr/bin/env php
 <?php
 
+$v = phpversion();
+
+if ($v < '5.4.0') {
+	echo 'Stylish requires PHP version > 5.4 ...'; die;
+}
+
+// requires all files from app
 require 'require.php';
 
+// so we know the basedir
 define('WORKING_DIR', __DIR__);
 
+// simple startup message
+// see Reporter
 Reporter::shout(Reporter::MSG_START);
 
 // first argument is the script's name: "stylish", remove this
@@ -17,11 +27,14 @@ $command = $argv[0];
 $directives = $argv;
 
 // each command should detect if its been called...
+$compile = CompileCommand::detect($command);
 $watch = WatchCommand::detect($command);
 $list = ListCommand::detect($command);
 $stop = StopCommand::detect($command);
 $shutdown = ShutdownCommand::detect($command);
 
+// a strange directive that operates sort of like a command,
+// no problem.
 $help = HelpDirective::detect($command);
 
 // and then go through and perform approriate operations
@@ -37,8 +50,13 @@ if ($watch) {
 } else if ($shutdown) {
 	$shutdown = new ShutdownCommand($directives);
 	$shutdown->execute();
-} else if ($help) {
+} else if ($compile) {
+	$compile = new CompileCommand($directives);
+	$compile->execute();
+} else if ($help || $command == '') {
+	// this could be in help->execute()
 	Reporter::shout(Reporter::MSG_HELP);
 } else {
+	// shows this on unrecognized
 	Reporter::shout(Reporter::MSG_UNRECOGNIZED_COMMAND);
 }

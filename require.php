@@ -12,6 +12,7 @@ require 'app/Command/WatchCommand.php';
 require 'app/Command/ListCommand.php';
 require 'app/Command/StopCommand.php';
 require 'app/Command/ShutdownCommand.php';
+require 'app/Command/CompileCommand.php';
 
 require 'app/Directive.php';
 require 'app/Directive/CompressDirective.php';

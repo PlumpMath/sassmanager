@@ -35,6 +35,8 @@ class WatchCommand extends Command
 		} else {
 			$iops = $this->getDirective('InputOutputParameter');
 
+      if ( ! is_array($iops)) $iops = [$iops];
+
 			$io_str = '';
 
 			foreach ($iops as $iop) {

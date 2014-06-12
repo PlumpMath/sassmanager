@@ -87,9 +87,14 @@ EOD;
 .: Unrecognized Command :.
 EOD;
 	const MSG_WATCH = <<<EOD
-Initializing SASS Instances ...
+Initializing SASS Instance ...
 
 	==> Watching %s: [ %s ]
+EOD;
+	const MSG_COMPILE = <<<EOD
+Running SASS Instance once...
+
+	==> Compiling: [ %s ]
 EOD;
 	const MSG_STOP = <<<EOD
 Killing SASS Instances ...
